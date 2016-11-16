@@ -2,9 +2,13 @@ const fs = require('fs');
 const expat = require('node-expat')
 var parser = new expat.Parser('UTF-8')
 
+main()
+
 function main () {
     process.argv.forEach((val, index) => {
-        if (index > 1) {
+        console.log(index, val)
+        if (index === 2) { // the third parameter is the path to the file
+            if (!val) return
             parseFile(val)
         }
     })
@@ -17,12 +21,17 @@ function parseFile (path) {
             objectStructure.add(name, attrs)
         })
         parser.write(data) // sync
-        output(objectStructure.areas)
+        let dirname = path.split('.')[0] + 'jsons'
+        output(dirname)
     })
 }
 
-function output (path, data) {
-    fs.writeFile('path', JSON.stringify(data), (err) => {
+function output (dirName) {
+    
+}
+
+function writeJson (path, data) {
+    fs.writeFile(path, JSON.stringify(data), (err) => {
         if (err) throw err
     })
 }
@@ -49,7 +58,7 @@ var objectStructure = {
             }
             if (!this.curCountry) throw new Error()
             if (!this.curCountry.states) this.curCountry.states = []
-            curCountry.states.push(curState)
+            this.curCountry.states.push(this.curState)
         } else if (name === 'City') {
             this.curCity = {}
             if (attrs) {
@@ -58,7 +67,7 @@ var objectStructure = {
             }
             if (!this.curState) throw new Error()
             if (!this.curState.citys) this.curState.citys = []
-            this.curState.citys.push(curCity)
+            this.curState.citys.push(this.curCity)
         }
     }
 }
