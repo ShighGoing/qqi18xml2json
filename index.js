@@ -26,7 +26,7 @@ function parseFile (path) {
 }
 
 function genOutputDirName (inputFilePath) {
-    return path.split('.')[0] + 'jsons'
+    return inputFilePath.split('.')[0] + 'jsons'
 }
 
 function output (dirName) {
