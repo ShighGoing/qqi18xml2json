@@ -25,7 +25,6 @@ function parseFile (path) {
 }
 
 function genOutputDirName (inputFilePath) {
-    console.log(inputFilePath + '-jsons')
     return inputFilePath + '-jsons'
 }
 
