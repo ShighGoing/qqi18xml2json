@@ -30,6 +30,12 @@ function genOutputDirName (inputFilePath) {
 }
 
 function output (dirName) {
+    console.log(fs.access(dirName, fs.constants.W_OK))
+    if (!fs.access(dirName, fs.constants.W_OK)) {
+        if (!fs.mkdirSync(dirName, fs.constants.W_OK)) {
+            return false
+        }
+    }
     writeJson(dirName + '/location.json', objectStructure.areas) // whole file
     let countryList = []
     objectStructure.areas.forEach((country) => {
