@@ -30,10 +30,10 @@ function genOutputDirName (inputFilePath) {
 }
 
 function output (dirName) {
-    fs.access(dirName, 'wr', (err) => {
+    fs.access(dirName, fs.constants.R_OK | fs.constants.W_OK, (err) => {
         if (err) {
             if (err.code === "ENOENT") {
-              fs.mkdir(dirName, 'wr', (err) => {
+              fs.mkdir(dirName, (err) => {
                 if (err) throw err
                 execOutput(dirName)
               })
@@ -54,7 +54,7 @@ function execOutput (dirName) {
             name: country.name,
             code: country.code
         })
-        writeJson(dirName + '/' + country.name + '_' + country.code, country)
+        writeJson(dirName + '/' + country.name + '_' + country.code + '.json', country)
     })
     writeJson(dirName + '/countryList.json', countryList)
 }
