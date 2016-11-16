@@ -104,6 +104,13 @@ var objectStructure = {
             if (!this.curState) throw new Error()
             if (!this.curState.citys) this.curState.citys = []
             this.curState.citys.push(this.curCity)
+        } else if (name === 'Region') {
+            if (!this.curCity) throw new Error()
+            if (!this.curCity.regions) this.curCity.regions = []
+            this.curCity.regions.push({
+                name: attrs.Name,
+                code: attrs.Code
+            })
         }
     }
 }
