@@ -6,7 +6,6 @@ main()
 
 function main () {
     process.argv.forEach((val, index) => {
-        console.log(index, val)
         if (index === 2) { // the third parameter is the path to the file
             if (!val) return
             parseFile(val)
@@ -26,7 +25,8 @@ function parseFile (path) {
 }
 
 function genOutputDirName (inputFilePath) {
-    return inputFilePath.split('.')[0] + 'jsons'
+    console.log(inputFilePath + '-jsons')
+    return inputFilePath + '-jsons'
 }
 
 function output (dirName) {
@@ -61,7 +61,7 @@ function execOutput (dirName) {
             name: country.name,
             code: country.code
         })
-        writeJson(dirName + '/' + country.name + '_' + country.code + '.json', country)
+        writeJson(dirName + '/'  + country.code + '.json', country)
     })
     writeJson(dirName + '/countryList.json', countryList)
 }
