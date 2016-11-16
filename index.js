@@ -21,13 +21,25 @@ function parseFile (path) {
             objectStructure.add(name, attrs)
         })
         parser.write(data) // sync
-        let dirname = path.split('.')[0] + 'jsons'
-        output(dirname)
+        output(genOutputDirName(path))
     })
 }
 
+function genOutputDirName (inputFilePath) {
+    return path.split('.')[0] + 'jsons'
+}
+
 function output (dirName) {
-    
+    writeJson(dirName + '/location.json', objectStructure.areas) // whole file
+    let countryList = []
+    objectStructure.areas.forEach((country) => {
+        countryList.push({
+            name: country.name,
+            code: country.code
+        })
+        writeJson(dirName + '/' + country.name + '_' + country.code, country)
+    })
+    writeJson(dirName + '/countryList.json', countryList)
 }
 
 function writeJson (path, data) {
