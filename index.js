@@ -41,7 +41,14 @@ function output (dirName) {
               throw err;
             } 
         } else {
-            execOutput(dirName)
+            // clear folder
+            fs.readdir(dirName, (err, filenameList) => {
+                if (err) throw err
+                filenameList.forEach((filename) => {
+                    fs.unlinkSync(dirName + '/' + filename)
+                })
+                execOutput(dirName)
+            })
         }      
     })
 }
